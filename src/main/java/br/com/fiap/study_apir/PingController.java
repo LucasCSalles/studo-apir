@@ -23,6 +23,10 @@ public class PingController {
      @GetMapping()
      public String rota3() {
         return "rota3";
-     }     
+     } 
+     @GetMapping("/zxply")
+     public String zxply() {
+        return "é eu";
+     }      
 }
 
