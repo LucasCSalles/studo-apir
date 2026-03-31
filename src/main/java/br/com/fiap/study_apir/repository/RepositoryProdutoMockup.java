@@ -1,7 +1,9 @@
 package br.com.fiap.study_apir.repository;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import br.com.fiap.study_apir.model.Produto;
 
@@ -11,27 +13,21 @@ public class RepositoryProdutoMockup {
 
     public RepositoryProdutoMockup() {
     
-        Produto produto = new Produto();
-        produto.setId(1L);
-        produto.setNome("Mao");
-
+        Produto produto = new Produto(1L,"UVA",BigDecimal.valueOf(12.2));
+        produtos.add(produto);
+        produto = new Produto(5L,"MAMAO", BigDecimal.valueOf(23.23));
         produtos.add(produto);
 
-        Produto produto2 = new Produto();
-        produto2.setId(5L);
-        produto2.setNome("Dedão");
-        produtos.add(produto2);
 
     }
     public List<Produto> findAll(){
         return produtos;
     }
-    public Produto findById(Long id){
-        for (Produto produto : produtos){
-            if(produto.getId().equals(id)){
-                return produto;
-            }
-        }
-        return null;
+    public Optional<Produto> findById(Long id){
+        return produtos.stream().filter(p -> p.getId().equals(id)).findFirst();
+    }
+    public boolean deleteById(Long id){
+        
+        return produtos.removeIf(p -> p.getId().equals(id));
     }
 }
