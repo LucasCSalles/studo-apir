@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.study_apir.model.Produto;
 import br.com.fiap.study_apir.repository.ProdutoRepository;
-import br.com.fiap.study_apir.repository.RepositoryProdutoMockup;
 
 @RestController
 @RequestMapping("api/${api.version}/produtos")
@@ -49,17 +48,18 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.OK).body(repository.findAll());
     }
 
-    // @PutMapping("/pdate/{id}")
-    // public ResponseEntity<String> update(@PathVariable Long id, @RequestBody Produto produto){
-    //    Optional<Produto> optProduto = repository.findById(id);
-    //    if(optProduto.isPresent()){
-    //     produto.set
-    //     repository.save(produto);
-    //    }else 
-    //    {
+    @PutMapping("/pdate/{id}")
+    public ResponseEntity<Produto> update(@PathVariable Long id, @RequestBody Produto produto){
+       Optional<Produto> optProduto = repository.findById(id);
+       if(optProduto.isPresent()){
+        produto.setId(id);
+        Produto produtoAlterado = repository.save(produto);
+        return ResponseEntity.ok(produtoAlterado);
+       } else {
+        return ResponseEntity.notFound().build();
+       }
 
-    //    }
-    // }
+    }
     //     if(mockup.update(id, produto)){
     //         return ResponseEntity.ok("Produto atualizado");
     //     }else {
